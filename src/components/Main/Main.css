@@ -1,0 +1,8 @@
+.main__container {
+  display: grid;
+  grid-template-columns: 60%;
+  justify-content: center;
+  background-color: coral;
+  padding: 20px;
+  height: 100%;
+}
