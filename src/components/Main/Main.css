@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: 60%;
   justify-content: center;
-  background-color: coral;
+  align-items: stretch;
   padding: 20px;
   height: 100%;
 }

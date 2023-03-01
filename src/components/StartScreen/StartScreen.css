@@ -1,0 +1,31 @@
+.startScreen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+}
+
+.startScreen__link {
+  transition: 0.3s;
+  border: 5px solid rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  background-color: ivory;
+  padding: 10px 20px;
+  min-width: 60%;
+  color: #000;
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 1;
+  font-family: inherit;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.startScreen__link:hover,
+.startScreen__link:focus {
+  scale: 1.2;
+  outline: none;
+  border-color: #000;
+}
