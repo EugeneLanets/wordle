@@ -1,20 +1,20 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import App from "./src/App";
-import React from "react";
-import StartScreen from "./src/components/StartScreen";
-import Rules from "./src/components/Rules";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import App from './src/App';
+import React from 'react';
+import StartScreen from './src/components/StartScreen';
+import Rules from './src/components/Rules';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <App />,
     children: [
       {
-        path: "",
+        index: true,
         element: <StartScreen />,
       },
       {
-        path: "rules",
+        path: 'rules',
         element: <Rules />,
       },
     ],

@@ -1,7 +1,12 @@
 import './Rules.css';
+import TextScreen from '../TextScreen';
 
 const Rules = () => (
-  <div className="rules">Rules</div>
+  <TextScreen title={'Правила игры'}>
+    <p>Jlby</p>
+    <p>Jlby</p>
+    <p>Jlby</p>
+  </TextScreen>
 );
 
 export default Rules;
