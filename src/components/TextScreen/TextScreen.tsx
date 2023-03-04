@@ -11,6 +11,9 @@ const TextScreen = ({
   children,
 }: PropsWithChildren<ITextScreenProps>) => {
   const navigate = useNavigate();
+  const handleCloseButtonClick = () => {
+    navigate(-1);
+  };
   return (
     <div className='textScreen'>
       <h2 className='textScreen__title'>{title}</h2>
@@ -18,9 +21,7 @@ const TextScreen = ({
       <button
         type='button'
         className='textScreen__close-button'
-        onClick={() => {
-          navigate(-1);
-        }}
+        onClick={handleCloseButtonClick}
       >
         Назад
       </button>

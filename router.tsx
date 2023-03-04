@@ -3,6 +3,7 @@ import App from './src/App';
 import React from 'react';
 import StartScreen from './src/components/StartScreen';
 import Rules from './src/components/Rules';
+import Game from './src/components/Game';
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
       {
         path: 'rules',
         element: <Rules />,
+      },
+      {
+        path: 'game',
+        element: <Game />,
       },
     ],
   },
