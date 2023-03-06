@@ -1,7 +1,5 @@
 import './Game.css';
 
-const Game = () => (
-  <div className="game">Game</div>
-);
+const Game = () => <section className='game'>Game</section>;
 
 export default Game;
