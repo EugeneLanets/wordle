@@ -4,6 +4,7 @@ import React from 'react';
 import StartScreen from './src/components/StartScreen';
 import Rules from './src/components/Rules';
 import Game from './src/components/Game';
+import wordService from './src/services/wordService';
 
 const router = createBrowserRouter([
   {
