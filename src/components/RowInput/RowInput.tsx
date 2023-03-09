@@ -7,14 +7,18 @@ import {
   getClassName,
   isInputValid,
 } from './helpers';
+import { useSelector } from 'react-redux';
+import { ICell, RootState } from '../../interfaces';
 
 const RowInput = () => {
-  const [cells, setCells] = useState(
-    Array.from({ length: 5 }, (_, idx) => ({
-      value: '',
-      id: `row${idx}`,
-    }))
-  );
+  // const [cells, setCells] = useState(
+  //   Array.from({ length: 5 }, (_, idx) => ({
+  //     value: '',
+  //     id: `row${idx}`,
+  //   }))
+  // );
+
+  const cells = useSelector((state: RootState): ICell[] => state.rowInput);
 
   const [errorCellId, setErrorCellId] = useState('');
 

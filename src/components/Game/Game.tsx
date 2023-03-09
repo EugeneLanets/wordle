@@ -4,9 +4,11 @@ import { useEffect, useState } from 'react';
 
 import wordService from '../../services/wordService';
 import RowInput from '../RowInput';
+import { useSelector } from 'react-redux';
 
 const Game = () => {
-  const [word, setWord] = useState('слово');
+  const { word } = useSelector((state: { word: string }) => state);
+  console.log(word);
   // useEffect(() => {
   //   wordService
   //     .getRandomWord()
@@ -15,6 +17,7 @@ const Game = () => {
   // }, []);
   return (
     <section className='game'>
+      {word}
       <RowInput />
     </section>
   );
