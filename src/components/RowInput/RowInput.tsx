@@ -57,7 +57,8 @@ const RowInput = () => {
   };
 
   return (
-    <div className='rowInput'>
+    <form className='rowInput'>
+      <button type='reset'>Reset</button>
       {cells.map((cell, idx) => (
         <input
           type='text'
@@ -70,7 +71,8 @@ const RowInput = () => {
           name={cell.id}
         />
       ))}
-    </div>
+      <button type='submit'>Submit</button>
+    </form>
   );
 };
 
