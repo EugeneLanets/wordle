@@ -1,0 +1,77 @@
+import './RowInput.css';
+import { ChangeEvent, KeyboardEvent, useState } from 'react';
+import classNames from 'classnames';
+import {
+  focusOnNextInput,
+  focusOnPreviousInput,
+  getClassName,
+  isInputValid,
+} from './helpers';
+
+const RowInput = () => {
+  const [cells, setCells] = useState(
+    Array.from({ length: 5 }, (_, idx) => ({
+      value: '',
+      id: `row${idx}`,
+    }))
+  );
+
+  const [errorCellId, setErrorCellId] = useState('');
+
+  const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = evt.target;
+
+    if (!value.length) return;
+
+    if (!isInputValid(value)) {
+      setErrorCellId(name);
+      return;
+    }
+
+    setCells(
+      cells.map((cell) =>
+        cell.id === name
+          ? {
+              id: cell.id,
+              value: value === 'ё' ? 'е' : value.toLowerCase(),
+            }
+          : cell
+      )
+    );
+    setErrorCellId('');
+    focusOnNextInput(evt.target);
+  };
+  const handleKeyUp = (evt: KeyboardEvent<HTMLInputElement>) => {
+    const { name } = evt.currentTarget;
+    const { key } = evt;
+    if (key !== 'Backspace' && key !== 'Delete') {
+      return;
+    }
+    setCells(
+      cells.map((cell) => {
+        return cell.id === name ? { id: cell.id, value: '' } : cell;
+      })
+    );
+    focusOnPreviousInput(evt.currentTarget);
+    setErrorCellId('');
+  };
+
+  return (
+    <div className='rowInput'>
+      {cells.map((cell, idx) => (
+        <input
+          type='text'
+          className={getClassName(cell.id, errorCellId)}
+          maxLength={1}
+          onChange={handleChange}
+          onKeyUp={handleKeyUp}
+          value={cell.value}
+          key={cell.id}
+          name={cell.id}
+        />
+      ))}
+    </div>
+  );
+};
+
+export default RowInput;

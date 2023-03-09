@@ -1,0 +1,11 @@
+.rowInput {
+  display: flex;
+}
+
+.cell {
+  background-color: green;
+}
+
+.cell__type_error {
+  background-color: red;
+}
