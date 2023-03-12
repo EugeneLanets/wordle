@@ -13,6 +13,7 @@ import {
 const RowInput = () => {
   const dispatch = useDispatch();
   const cells = useSelector((state: RootState): ICell[] => state.rowInput);
+  const emptyCellsLength = cells.filter(({ value }) => !value).length;
   const handleChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
     const { name: id, value } = target;
     dispatch(resetError());
@@ -57,7 +58,9 @@ const RowInput = () => {
 
   return (
     <form className='rowInput' onReset={handleRowReset}>
-      <button type='reset'>Reset</button>
+      <button type='reset' disabled={emptyCellsLength === cells.length}>
+        Reset
+      </button>
       {cells.map((cell) => (
         <input
           type='text'
@@ -71,7 +74,9 @@ const RowInput = () => {
           name={cell.id}
         />
       ))}
-      <button type='submit'>Submit</button>
+      <button type='submit' disabled={emptyCellsLength !== 0}>
+        Submit
+      </button>
     </form>
   );
 };
