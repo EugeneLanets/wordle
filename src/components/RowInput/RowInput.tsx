@@ -1,72 +1,57 @@
 import './RowInput.css';
-import { ChangeEvent, KeyboardEvent, useState } from 'react';
-import classNames from 'classnames';
-import {
-  focusOnNextInput,
-  focusOnPreviousInput,
-  getClassName,
-  isInputValid,
-} from './helpers';
-import { useSelector } from 'react-redux';
+import { ChangeEvent, KeyboardEvent } from 'react';
+import { focusOnAnotherInput, getClassName, isInputValid } from './helpers';
+import { useDispatch, useSelector } from 'react-redux';
 import { ICell, RootState } from '../../interfaces';
+import {
+  resetError,
+  updateCellError,
+  updateCellValue,
+} from '../../store/reducers/rowInputReducer';
 
 const RowInput = () => {
-  // const [cells, setCells] = useState(
-  //   Array.from({ length: 5 }, (_, idx) => ({
-  //     value: '',
-  //     id: `row${idx}`,
-  //   }))
-  // );
-
+  const dispatch = useDispatch();
   const cells = useSelector((state: RootState): ICell[] => state.rowInput);
-
-  const [errorCellId, setErrorCellId] = useState('');
-
-  const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = evt.target;
-
+  const handleChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    const { name: id, value } = target;
+    dispatch(resetError());
     if (!value.length) return;
 
     if (!isInputValid(value)) {
-      setErrorCellId(name);
+      dispatch(updateCellError(id));
       return;
     }
 
-    setCells(
-      cells.map((cell) =>
-        cell.id === name
-          ? {
-              id: cell.id,
-              value: value === 'ё' ? 'е' : value.toLowerCase(),
-            }
-          : cell
-      )
-    );
-    setErrorCellId('');
-    focusOnNextInput(evt.target);
+    dispatch(updateCellValue({ id, value }));
+    focusOnAnotherInput(target, 'forward');
   };
   const handleKeyUp = (evt: KeyboardEvent<HTMLInputElement>) => {
-    const { name } = evt.currentTarget;
-    const { key } = evt;
-    if (key !== 'Backspace' && key !== 'Delete') {
-      return;
+    const { key, currentTarget } = evt;
+    const { name: id } = currentTarget;
+    switch (key) {
+      case 'Backspace':
+      case 'Delete':
+        dispatch(updateCellValue({ id, value: '' }));
+        focusOnAnotherInput(currentTarget, 'backward');
+        return;
+      case 'ArrowLeft':
+        focusOnAnotherInput(currentTarget, 'backward');
+        return;
+      case 'ArrowRight':
+        focusOnAnotherInput(currentTarget, 'forward');
+        return;
+      default:
+        return;
     }
-    setCells(
-      cells.map((cell) => {
-        return cell.id === name ? { id: cell.id, value: '' } : cell;
-      })
-    );
-    focusOnPreviousInput(evt.currentTarget);
-    setErrorCellId('');
   };
 
   return (
     <form className='rowInput'>
       <button type='reset'>Reset</button>
-      {cells.map((cell, idx) => (
+      {cells.map((cell) => (
         <input
           type='text'
-          className={getClassName(cell.id, errorCellId)}
+          className={getClassName(cell.hasError)}
           maxLength={1}
           onChange={handleChange}
           onKeyUp={handleKeyUp}
