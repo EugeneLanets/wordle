@@ -1,5 +1,5 @@
 import './RowInput.css';
-import { ChangeEvent, KeyboardEvent } from 'react';
+import { ChangeEvent, FocusEvent, KeyboardEvent } from 'react';
 import { focusOnAnotherInput, getClassName, isInputValid } from './helpers';
 import { useDispatch, useSelector } from 'react-redux';
 import { ICell, RootState } from '../../interfaces';
@@ -25,6 +25,7 @@ const RowInput = () => {
     dispatch(updateCellValue({ id, value }));
     focusOnAnotherInput(target, 'forward');
   };
+
   const handleKeyUp = (evt: KeyboardEvent<HTMLInputElement>) => {
     const { key, currentTarget } = evt;
     const { name: id } = currentTarget;
@@ -45,6 +46,10 @@ const RowInput = () => {
     }
   };
 
+  const handleFocus = ({ target }: FocusEvent<HTMLInputElement>) => {
+    target.select();
+  };
+
   return (
     <form className='rowInput'>
       <button type='reset'>Reset</button>
@@ -55,6 +60,7 @@ const RowInput = () => {
           maxLength={1}
           onChange={handleChange}
           onKeyUp={handleKeyUp}
+          onFocus={handleFocus}
           value={cell.value}
           key={cell.id}
           name={cell.id}
