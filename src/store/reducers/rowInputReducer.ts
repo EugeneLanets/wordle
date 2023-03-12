@@ -29,9 +29,12 @@ const rowInputSlice = createSlice({
       if (!newCell) return;
       newCell.value = value;
     },
+    resetCells() {
+      return initialState;
+    },
   },
 });
 
-export const { updateCellError, resetError, updateCellValue } =
+export const { updateCellError, resetError, updateCellValue, resetCells } =
   rowInputSlice.actions;
 export default rowInputSlice.reducer;

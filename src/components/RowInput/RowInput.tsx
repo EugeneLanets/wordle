@@ -4,6 +4,7 @@ import { focusOnAnotherInput, getClassName, isInputValid } from './helpers';
 import { useDispatch, useSelector } from 'react-redux';
 import { ICell, RootState } from '../../interfaces';
 import {
+  resetCells,
   resetError,
   updateCellError,
   updateCellValue,
@@ -50,8 +51,12 @@ const RowInput = () => {
     target.select();
   };
 
+  const handleRowReset = () => {
+    dispatch(resetCells());
+  };
+
   return (
-    <form className='rowInput'>
+    <form className='rowInput' onReset={handleRowReset}>
       <button type='reset'>Reset</button>
       {cells.map((cell) => (
         <input
