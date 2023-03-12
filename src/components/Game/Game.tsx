@@ -8,7 +8,6 @@ const Game = () => {
 
   return (
     <section className='game'>
-      {word}
       <RowInput />
     </section>
   );

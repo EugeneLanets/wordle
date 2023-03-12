@@ -1,5 +1,5 @@
 import './RowInput.css';
-import { ChangeEvent, FocusEvent, KeyboardEvent } from 'react';
+import { ChangeEvent, KeyboardEvent } from 'react';
 import { focusOnAnotherInput, getClassName, isInputValid } from './helpers';
 import { useDispatch, useSelector } from 'react-redux';
 import { ICell, RootState } from '../../interfaces';
@@ -15,6 +15,7 @@ const RowInput = () => {
   const cells = useSelector((state: RootState): ICell[] => state.rowInput);
   const emptyCellsLength = cells.filter(({ value }) => !value).length;
   const handleChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    console.log('change');
     const { name: id, value } = target;
     dispatch(resetError());
     if (!value.length) return;
@@ -33,9 +34,11 @@ const RowInput = () => {
     const { name: id } = currentTarget;
     switch (key) {
       case 'Backspace':
-      case 'Delete':
         dispatch(updateCellValue({ id, value: '' }));
         focusOnAnotherInput(currentTarget, 'backward');
+        return;
+      case 'Delete':
+        dispatch(updateCellValue({ id, value: '' }));
         return;
       case 'ArrowLeft':
         focusOnAnotherInput(currentTarget, 'backward');
@@ -48,16 +51,12 @@ const RowInput = () => {
     }
   };
 
-  const handleFocus = ({ target }: FocusEvent<HTMLInputElement>) => {
-    target.select();
-  };
-
   const handleRowReset = () => {
     dispatch(resetCells());
   };
 
   return (
-    <form className='rowInput' onReset={handleRowReset}>
+    <form className='row rowInput' onReset={handleRowReset}>
       <button type='reset' disabled={emptyCellsLength === cells.length}>
         Reset
       </button>
@@ -68,7 +67,6 @@ const RowInput = () => {
           maxLength={1}
           onChange={handleChange}
           onKeyUp={handleKeyUp}
-          onFocus={handleFocus}
           value={cell.value}
           key={cell.id}
           name={cell.id}

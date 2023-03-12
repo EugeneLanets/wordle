@@ -1,11 +1,32 @@
-.rowInput {
-  display: flex;
+.row {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: repeat(7, 1fr);
+  place-items: center;
+  gap: 20px;
 }
 
 .cell {
-  background-color: green;
+  transition: 0.3s;
+  border: 5px solid rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  background-color: ivory;
+  padding: 10px;
+  aspect-ratio: 1;
+  width: 100%;
+  font-size: 2.5rem;
+  font-family: inherit;
+  text-align: center;
+  text-transform: uppercase;
 }
 
-.cell__type_error {
+.cell:focus {
+  scale: 1.2;
+  outline: none;
+  border-color: #000;
+  caret-color: transparent;
+}
+
+.cell_type_error {
   background-color: red;
 }

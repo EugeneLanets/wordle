@@ -27,7 +27,7 @@ const rowInputSlice = createSlice({
       const { id, value } = action.payload;
       const newCell = state.find((cell) => cell.id === id);
       if (!newCell) return;
-      newCell.value = value;
+      newCell.value = value.toLowerCase();
     },
     resetCells() {
       return initialState;
