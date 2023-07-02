@@ -1,6 +1,6 @@
 import { type FC, type FormEvent, useEffect, useRef } from 'react';
 import useAppSelector from '../../hooks/use-app-selector';
-import { setCell } from '../../services/store/reducers/rows';
+import { resetRow, setCell } from '../../services/store/reducers/rows';
 import Row from '../row';
 import ActiveRow from '../active-row';
 import useAppDispatch from '../../hooks/use-app-dispatch';
@@ -23,7 +23,9 @@ const Game: FC = () => {
     onSubmit: (evt: FormEvent<HTMLFormElement>) => {
       evt.preventDefault();
       dispatch(setNextRowActive());
-      console.log(activeRow);
+    },
+    onReset: (rowId: string) => {
+      dispatch(resetRow(rowId));
     },
   };
 
@@ -41,6 +43,7 @@ const Game: FC = () => {
             onChange={callbacks.onChange}
             ref={ref}
             onSubmit={callbacks.onSubmit}
+            onReset={callbacks.onReset}
           />
         ) : (
           <Row key={row.id} row={row} />

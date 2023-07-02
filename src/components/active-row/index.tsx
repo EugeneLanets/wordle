@@ -1,11 +1,17 @@
-import { type ChangeEvent, type FocusEvent, forwardRef, useMemo } from 'react';
+import {
+  type ChangeEvent,
+  type FocusEvent,
+  type FormEvent,
+  forwardRef,
+  useMemo,
+} from 'react';
 import RowLayout from '../row-layout';
 import classnames from '../../utils/classnames';
 import { type ActiveRowProps } from '../../types/rows';
 
 const ActiveRow = forwardRef<HTMLInputElement, ActiveRowProps>(
   function ActiveRow(props, ref) {
-    const { row, onChange, onSubmit } = props;
+    const { row, onChange, onSubmit, onReset } = props;
     const cn = classnames('RowLayout');
 
     const callbacks = {
@@ -15,6 +21,10 @@ const ActiveRow = forwardRef<HTMLInputElement, ActiveRowProps>(
       onFocus: (evt: FocusEvent<HTMLInputElement>) => {
         evt.target.select();
       },
+      onReset: (evt: FormEvent<HTMLFormElement>) => {
+        evt.preventDefault();
+        onReset(row.id);
+      },
     };
 
     const options = {
@@ -23,10 +33,8 @@ const ActiveRow = forwardRef<HTMLInputElement, ActiveRowProps>(
       }, [row]),
     };
 
-    console.log(options.rowLength);
-
     return (
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} onReset={callbacks.onReset}>
         <RowLayout>
           <button
             type={'reset'}
@@ -47,7 +55,11 @@ const ActiveRow = forwardRef<HTMLInputElement, ActiveRowProps>(
               maxLength={1}
             />
           ))}
-          <button type={'submit'} className={cn('button')}>
+          <button
+            type={'submit'}
+            className={cn('button')}
+            disabled={options.rowLength !== 5}
+          >
             v
           </button>
         </RowLayout>

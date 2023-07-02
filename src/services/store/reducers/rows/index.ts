@@ -36,5 +36,5 @@ const rowsSlice = createSlice({
     },
   },
 });
-export const { setCell } = rowsSlice.actions;
+export const { setCell, resetRow } = rowsSlice.actions;
 export default rowsSlice.reducer;

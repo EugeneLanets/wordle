@@ -21,6 +21,7 @@ export interface RowProps {
 export interface ActiveRowProps extends RowProps {
   onChange: (rowId: string, element: HTMLInputElement) => void;
   onSubmit: (evt: FormEvent<HTMLFormElement>) => void;
+  onReset: (rowId: string) => void;
 }
 
 export interface CellChangePayload {
