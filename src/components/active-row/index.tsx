@@ -1,11 +1,11 @@
-import { type ChangeEvent, type FocusEvent, forwardRef } from 'react';
+import { type ChangeEvent, type FocusEvent, forwardRef, useMemo } from 'react';
 import RowLayout from '../row-layout';
 import classnames from '../../utils/classnames';
 import { type ActiveRowProps } from '../../types/rows';
 
 const ActiveRow = forwardRef<HTMLInputElement, ActiveRowProps>(
   function ActiveRow(props, ref) {
-    const { row, onChange } = props;
+    const { row, onChange, onSubmit } = props;
     const cn = classnames('RowLayout');
 
     const callbacks = {
@@ -17,11 +17,23 @@ const ActiveRow = forwardRef<HTMLInputElement, ActiveRowProps>(
       },
     };
 
+    const options = {
+      rowLength: useMemo(() => {
+        return row.cells.map((cell) => cell.letter).join('').length;
+      }, [row]),
+    };
+
+    console.log(options.rowLength);
+
     return (
-      <form>
+      <form onSubmit={onSubmit}>
         <RowLayout>
-          <button type={'reset'} className={cn('button')}>
-            a
+          <button
+            type={'reset'}
+            className={cn('button')}
+            disabled={options.rowLength < 1}
+          >
+            x
           </button>
           {row.cells.map((cell, idx) => (
             <input
@@ -36,7 +48,7 @@ const ActiveRow = forwardRef<HTMLInputElement, ActiveRowProps>(
             />
           ))}
           <button type={'submit'} className={cn('button')}>
-            a
+            v
           </button>
         </RowLayout>
       </form>

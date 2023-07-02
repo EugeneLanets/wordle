@@ -1,11 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const initialState = {
+  activeRow: {
+    index: 0,
+  },
+};
+
 const gameSlice = createSlice({
   name: 'game',
-  initialState: {
-    activeRow: 'row2',
+  initialState,
+  reducers: {
+    setNextRowActive(state) {
+      state.activeRow.index += 1;
+    },
   },
-  reducers: {},
 });
 
+export const { setNextRowActive } = gameSlice.actions;
 export default gameSlice.reducer;

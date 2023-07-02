@@ -1,4 +1,4 @@
-import { type FC, useEffect, useRef } from 'react';
+import { type FC, type FormEvent, useEffect, useRef } from 'react';
 import useAppSelector from '../../hooks/use-app-selector';
 import { setCell } from '../../services/store/reducers/rows';
 import Row from '../row';
@@ -6,10 +6,12 @@ import ActiveRow from '../active-row';
 import useAppDispatch from '../../hooks/use-app-dispatch';
 import { type IRow } from '../../types/rows';
 import goToNextElement from '../../utils/go-to-next-element';
+import { setNextRowActive } from '../../services/store/reducers/game';
 
 const Game: FC = () => {
   const rows: IRow[] = useAppSelector((state) => state.rows.rows);
-  const activeRow = useAppSelector((state) => state.game.activeRow);
+  const activeRowIndex = useAppSelector((state) => state.game.activeRow.index);
+  const activeRow = 'row' + String(activeRowIndex);
   const dispatch = useAppDispatch();
   const ref = useRef<HTMLInputElement>(null);
   const callbacks = {
@@ -17,6 +19,11 @@ const Game: FC = () => {
       const { name, value } = element;
       dispatch(setCell({ row: rowId, cell: name, letter: value }));
       goToNextElement(element);
+    },
+    onSubmit: (evt: FormEvent<HTMLFormElement>) => {
+      evt.preventDefault();
+      dispatch(setNextRowActive());
+      console.log(activeRow);
     },
   };
 
@@ -33,6 +40,7 @@ const Game: FC = () => {
             row={row}
             onChange={callbacks.onChange}
             ref={ref}
+            onSubmit={callbacks.onSubmit}
           />
         ) : (
           <Row key={row.id} row={row} />
