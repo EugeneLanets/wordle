@@ -4,6 +4,7 @@ const initialState = {
   activeRow: {
     index: 0,
   },
+  answer: 'плюха',
 };
 
 const gameSlice = createSlice({

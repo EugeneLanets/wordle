@@ -7,10 +7,12 @@ import useAppDispatch from '../../hooks/use-app-dispatch';
 import { type IRow } from '../../types/rows';
 import goToNextElement from '../../utils/go-to-next-element';
 import { setNextRowActive } from '../../services/store/reducers/game';
+import getStatus from '../../utils/get-status';
 
 const Game: FC = () => {
   const rows: IRow[] = useAppSelector((state) => state.rows.rows);
   const activeRowIndex = useAppSelector((state) => state.game.activeRow.index);
+  const answer = useAppSelector((state) => state.game.answer);
   const activeRow = 'row' + String(activeRowIndex);
   const dispatch = useAppDispatch();
   const ref = useRef<HTMLInputElement>(null);
@@ -48,7 +50,7 @@ const Game: FC = () => {
             onReset={callbacks.onReset}
           />
         ) : (
-          <Row key={row.id} row={row} />
+          <Row key={row.id} cells={getStatus(row.cells, answer)} />
         )
       )}
     </div>

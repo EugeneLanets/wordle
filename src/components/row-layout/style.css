@@ -12,12 +12,22 @@
   aspect-ratio: 1;
   width: 50px;
   font-size: 20px;
+  line-height: auto;
   font-family: monospace;
   text-align: center;
+  text-transform: uppercase;
 }
 
 .RowLayout__cell_error {
   background-color: red;
+}
+
+.RowLayout__cell_status_absent {
+  background-color: lightgray;
+}
+
+.RowLayout__cell_status_correct {
+  background-color: lightseagreen;
 }
 
 .RowLayout__button {

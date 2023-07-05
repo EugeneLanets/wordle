@@ -3,12 +3,12 @@ import RowLayout from '../row-layout';
 import classnames from '../../utils/classnames';
 import { type RowProps } from '../../types/rows';
 
-const Row: FC<RowProps> = ({ row }: RowProps) => {
+const Row: FC<RowProps> = ({ cells }: RowProps) => {
   const cn = classnames('RowLayout');
   return (
     <RowLayout>
-      {row.cells.map((cell) => (
-        <span key={cell.id} className={cn('cell')}>
+      {cells.map((cell) => (
+        <span key={cell.id} className={cn('cell', { status: cell.status })}>
           {cell.letter}
         </span>
       ))}
