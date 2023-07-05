@@ -4,18 +4,28 @@ import {
   type FormEvent,
   forwardRef,
   useMemo,
+  useState,
 } from 'react';
 import RowLayout from '../row-layout';
 import classnames from '../../utils/classnames';
 import { type ActiveRowProps } from '../../types/rows';
+import isRussianLetter from '../../utils/is-russian-letter';
 
 const ActiveRow = forwardRef<HTMLInputElement, ActiveRowProps>(
   function ActiveRow(props, ref) {
     const { row, onChange, onSubmit, onReset } = props;
+    const [errorCell, setErrorCell] = useState<string | null>(null);
     const cn = classnames('RowLayout');
 
     const callbacks = {
       onChange: (evt: ChangeEvent<HTMLInputElement>) => {
+        const letter = evt.target.value.toLowerCase();
+        const isLetterValid = isRussianLetter(letter);
+        if (!isLetterValid && letter !== '') {
+          setErrorCell(evt.target.name);
+          return;
+        }
+        setErrorCell(null);
         onChange(row.id, evt.target);
       },
       onFocus: (evt: FocusEvent<HTMLInputElement>) => {
@@ -46,7 +56,7 @@ const ActiveRow = forwardRef<HTMLInputElement, ActiveRowProps>(
           {row.cells.map((cell, idx) => (
             <input
               key={cell.id}
-              className={cn('cell')}
+              className={cn('cell', { error: errorCell === cell.id })}
               value={cell.letter}
               name={cell.id}
               onChange={callbacks.onChange}

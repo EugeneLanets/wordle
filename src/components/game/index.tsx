@@ -17,7 +17,9 @@ const Game: FC = () => {
   const callbacks = {
     onChange: (rowId: string, element: HTMLInputElement) => {
       const { name, value } = element;
-      dispatch(setCell({ row: rowId, cell: name, letter: value }));
+      dispatch(
+        setCell({ row: rowId, cell: name, letter: value.toLowerCase() })
+      );
       goToNextElement(element);
     },
     onSubmit: (evt: FormEvent<HTMLFormElement>) => {
@@ -31,7 +33,7 @@ const Game: FC = () => {
 
   useEffect(() => {
     ref?.current?.focus();
-  }, []);
+  }, [activeRowIndex]);
 
   return (
     <div>

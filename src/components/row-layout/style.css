@@ -6,8 +6,8 @@
 }
 
 .RowLayout__cell {
-  border: none;
-  background-color: red;
+  border: 1px solid #000;
+  border-radius: 5px;
   padding: 10px;
   aspect-ratio: 1;
   width: 50px;
@@ -16,10 +16,17 @@
   text-align: center;
 }
 
-.RowLayout__button {
-  background: none;
+.RowLayout__cell_error {
+  background-color: red;
 }
 
-.RowLayout__button:focus {
-  background-color: red;
+.RowLayout__button {
+  cursor: pointer;
+  border: none;
+  background: none;
+
+}
+
+.RowLayout__button:disabled {
+  cursor: default;
 }
