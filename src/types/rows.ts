@@ -1,5 +1,3 @@
-import { type FormEvent } from 'react';
-
 export interface ICell {
   id: string;
   letter: string;
@@ -32,9 +30,6 @@ export interface RowProps {
 
 export interface ActiveRowProps {
   row: IRow;
-  onChange: (rowId: string, element: HTMLInputElement) => void;
-  onSubmit: (evt: FormEvent<HTMLFormElement>) => void;
-  onReset: (rowId: string) => void;
 }
 
 export interface CellChangePayload {

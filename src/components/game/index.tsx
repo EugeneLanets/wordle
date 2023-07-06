@@ -1,54 +1,23 @@
-import { type FC, type FormEvent, useEffect, useRef } from 'react';
+import { type FC } from 'react';
 import useAppSelector from '../../hooks/use-app-selector';
-import { resetRow, setCell } from '../../services/store/reducers/rows';
+
 import Row from '../row';
 import ActiveRow from '../active-row';
-import useAppDispatch from '../../hooks/use-app-dispatch';
+
 import { type IRow } from '../../types/rows';
-import goToNextElement from '../../utils/go-to-next-element';
-import { setNextRowActive } from '../../services/store/reducers/game';
+
 import getStatus from '../../utils/get-status';
 
 const Game: FC = () => {
   const rows: IRow[] = useAppSelector((state) => state.rows.rows);
-  const activeRowIndex = useAppSelector((state) => state.game.activeRow.index);
+  const activeRowId = useAppSelector((state) => state.game.activeRow.id);
   const answer = useAppSelector((state) => state.game.answer);
-  const activeRow = 'row' + String(activeRowIndex);
-  const dispatch = useAppDispatch();
-  const ref = useRef<HTMLInputElement>(null);
-  const callbacks = {
-    onChange: (rowId: string, element: HTMLInputElement) => {
-      const { name, value } = element;
-      dispatch(
-        setCell({ row: rowId, cell: name, letter: value.toLowerCase() })
-      );
-      goToNextElement(element);
-    },
-    onSubmit: (evt: FormEvent<HTMLFormElement>) => {
-      evt.preventDefault();
-      dispatch(setNextRowActive());
-    },
-    onReset: (rowId: string) => {
-      dispatch(resetRow(rowId));
-    },
-  };
-
-  useEffect(() => {
-    ref?.current?.focus();
-  }, [activeRowIndex]);
 
   return (
     <div>
       {rows.map((row) =>
-        row.id === activeRow ? (
-          <ActiveRow
-            key={row.id}
-            row={row}
-            onChange={callbacks.onChange}
-            ref={ref}
-            onSubmit={callbacks.onSubmit}
-            onReset={callbacks.onReset}
-          />
+        row.id === activeRowId ? (
+          <ActiveRow key={row.id} row={row} />
         ) : (
           <Row key={row.id} cells={getStatus(row.cells, answer)} />
         )
