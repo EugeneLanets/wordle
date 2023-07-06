@@ -12,7 +12,6 @@
   aspect-ratio: 1;
   width: 50px;
   font-size: 20px;
-  line-height: auto;
   font-family: monospace;
   text-align: center;
   text-transform: uppercase;
@@ -28,6 +27,10 @@
 
 .RowLayout__cell_status_correct {
   background-color: lightseagreen;
+}
+
+.RowLayout__cell_status_present {
+  background-color: yellow;
 }
 
 .RowLayout__button {
